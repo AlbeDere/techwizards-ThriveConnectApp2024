@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from "express";
-import { addFeedback } from "../services/feedbackService";
+import { addFeedback, getAllFeedbacksForCompany  } from "../services/feedbackService";
 
 // Controller to handle feedback submission
 export const submitFeedback = async (
@@ -17,6 +17,24 @@ export const submitFeedback = async (
 
     const feedback = await addFeedback(companyId, { feedbackText, sentimentScore });
     return res.status(201).json(feedback);
+  } catch (error) {
+    next(error);
+  }
+};
+
+// Controller to handle retrieving all feedback for a specific company
+export const getFeedbacks = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { companyId } = req.params;
+
+    // Call the service to get all feedback for the company
+    const feedbacks = await getAllFeedbacksForCompany(companyId);
+
+    return res.status(200).json(feedbacks);
   } catch (error) {
     next(error);
   }

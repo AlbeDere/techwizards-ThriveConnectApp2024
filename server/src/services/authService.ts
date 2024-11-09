@@ -14,22 +14,16 @@ import bcrypt from "bcrypt";
 export const authenticateUser = async (
   email: string,
   password: string,
-  role: "jobseeker" | "company"
 ): Promise<string | null> => {
   try {
-    let user: IJobSeeker | ICompany | null;
-
-    // Check role and find the user in the appropriate collection
-    if (role === "jobseeker") {
-      user = await JobSeekerModel.findOne({ email });
-    } else if (role === "company") {
-      user = await CompanyModel.findOne({ email });
-    } else {
-      throw new BadRequestError("Invalid role specified");
-    }
+    const [jobSeeker, company] = await Promise.all([
+      JobSeekerModel.findOne({ email }),
+      CompanyModel.findOne({ email })
+    ]);
+    const user = jobSeeker || company;
 
     if (!user) {
-      throw new UnauthorizedError("Invalid email or password");
+      throw new InternalServerError("Error getting the user");
     }
 
     // Check password

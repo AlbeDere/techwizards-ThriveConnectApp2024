@@ -1,8 +1,11 @@
 ### Create a feedback
-POST http://localhost:3003/api/v1/feedback/672f256248dd4167eb2de6e1
+POST http://localhost:3003/api/v1/feedback/672f2804883a8ab2d618adad
 Content-Type: application/json
 
 {
   "feedbackText": "Great work environment!",
   "sentimentScore": 5
 }
+
+### Get all feedback for a company
+GET http://localhost:3003/api/v1/feedback/672f2804883a8ab2d618adad

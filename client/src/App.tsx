@@ -5,7 +5,12 @@ import "react-toastify/dist/ReactToastify.css";
 import LandingPage from "./pages/LandingPage";
 import ResourcesPage from "./pages/ResourcesPage";
 import LoginPage from "./pages/LoginPage";
-
+import SignUpSelectionPage from "./pages/SignUpSelectionPage";
+import JobSeekerSignUpPage from "./pages/JobSeekerSignUpPage";
+import CompanySignUpPage from "./pages/CompanySignUpPage";
+import ProfilePage from "./pages/ProfilePage";
+import JobSeekerProfilePage from "./pages/JobSeekerProfilePage";
+import CompanyProfilePage from "./pages/CompanyProfilePage";
 
 function App() {
   return (
@@ -15,7 +20,13 @@ function App() {
         <Route>
           <Route path="/" element={<LandingPage />} />
           <Route path="/resources" element={<ResourcesPage />} />
-          <Route path="/login" element={<LoginPage />}/>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/profilePage" element={<ProfilePage />}/>
+          <Route path="/signup" element={<SignUpSelectionPage />} />
+          <Route path="/signup/jobseeker" element={<JobSeekerSignUpPage />} />
+          <Route path="/signup/company" element={<CompanySignUpPage />} />
+          <Route path="/jobSeeker-profile-page/:id" element={<JobSeekerProfilePage/>}/>
+          <Route path="/company-profile-page/:id" element={<CompanyProfilePage/>}/>
         </Route>
       </Routes>
       <ToastContainer

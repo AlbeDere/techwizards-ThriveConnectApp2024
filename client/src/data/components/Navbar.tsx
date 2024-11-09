@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
@@ -8,8 +8,6 @@ import logo from "@/assets/logo.png";
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrollY, setScrollY] = useState(0);
-
-  const user = localStorage.getItem("token");
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
@@ -51,7 +49,7 @@ export default function Navbar() {
 
           {/* Desktop menu */}
           <div className="hidden md:flex items-center space-x-4">
-            {navItems.map((item) => (
+            {navItems.map((item, index) => (
               <Link
                 key={item.title}
                 to={item.path}
@@ -73,12 +71,7 @@ export default function Navbar() {
                 />
               </Link>
             ))}
-            {user
-            ? <div>
-
-              </div>
-            : <div>
-              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
               <Link to="/login">
                 <Button variant="outline" className="mr-2">
                   <User className="w-4 h-4 mr-2" />
@@ -93,8 +86,6 @@ export default function Navbar() {
                 </Button>
               </Link>
             </motion.div>
-            </div>
-            }
           </div>
 
           {/* Mobile menu button */}
@@ -158,11 +149,9 @@ export default function Navbar() {
                     Sign In
                   </Button>
                 </Link>
-                <Link to="/signup">
-                  <Button className="w-full bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600">
-                    Sign Up
-                  </Button>
-                </Link>
+                <Button className="w-full bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600">
+                  Sign Up
+                </Button>
               </div>
             </div>
           </motion.div>

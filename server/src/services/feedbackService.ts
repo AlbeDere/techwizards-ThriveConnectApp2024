@@ -31,3 +31,22 @@ export const addFeedback = async (
     throw new InternalServerError("Failed to add feedback");
   }
 };
+
+// Service to get all feedback for a specific company
+export const getAllFeedbacksForCompany = async (
+  companyId: string
+): Promise<IFeedback[]> => {
+  try {
+    // Check if the company exists
+    const company = await CompanyModel.findById(companyId);
+    if (!company) {
+      throw new NotFoundError("Company not found");
+    }
+
+    // Find all feedback entries associated with the companyId
+    const feedbacks = await FeedbackModel.find({ companyId });
+    return feedbacks;
+  } catch (error) {
+    throw new InternalServerError("Failed to retrieve feedbacks");
+  }
+};

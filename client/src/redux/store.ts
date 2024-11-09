@@ -1,14 +1,26 @@
-import { configureStore } from '@reduxjs/toolkit';
-import { authApi } from '../redux/api/authSlice';
+import { configureStore } from "@reduxjs/toolkit";
+import { authApi } from "../redux/api/authSlice";
+import { feedbackApi } from "../redux/api/feedbackSlice";
+import { jobSeekerApi } from "./api/jobseekerSlice";
+import { companyApi } from "./api/companySlice";
+import { fetchUserSlice } from "./api/fetchUserSlice";
 
 export const store = configureStore({
   reducer: {
-    // Add the authApi reducer to the store
+    [feedbackApi.reducerPath]: feedbackApi.reducer,
     [authApi.reducerPath]: authApi.reducer,
+    [jobSeekerApi.reducerPath]: jobSeekerApi.reducer,
+    [companyApi.reducerPath]: companyApi.reducer,
+    [fetchUserSlice.reducerPath]: fetchUserSlice.reducer,
   },
-  // Adding the authApi middleware to enable caching, invalidation, etc.
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(authApi.middleware),
+    getDefaultMiddleware().concat(
+      feedbackApi.middleware,
+      authApi.middleware,
+      jobSeekerApi.middleware,
+      companyApi.middleware,
+      fetchUserSlice.middleware
+    ),
 });
 
 // Export types for usage with hooks

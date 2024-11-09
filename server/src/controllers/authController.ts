@@ -8,8 +8,8 @@ export const loginHandler = async (
   next: NextFunction
 ): Promise<void> => {
   try {
-    const { email, password, role } = req.body;
-    const token = await authenticateUser(email, password, role);
+    const { email, password } = req.body;
+    const token = await authenticateUser(email, password);
     res.status(200).json({ token });
   } catch (error) {
     next(error);
