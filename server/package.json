@@ -57,8 +57,9 @@
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
-    "dev": "nodemon --exec ts-node src/server.ts",
-    "start": "ts-node src/server.ts",
+    "dev": "nodemon --exec ts-node api/server.ts",
+    "start": "ts-node api/server.ts",
+    "start:prod": "node public/build/api/server.js",
     "build": "tsc"
   }
 }

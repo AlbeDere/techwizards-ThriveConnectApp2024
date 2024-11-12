@@ -10,6 +10,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { NotFound } from "@/components/error/NotFound";
+import TransitionEffect from "@/components/ui/TransitionEffect";
 
 const ResourcesPage: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<string>("");
@@ -35,6 +36,7 @@ const ResourcesPage: React.FC = () => {
 
   return (
     <div className="container mx-auto p-4">
+      <TransitionEffect />
       <input
         type="text"
         placeholder="Search..."

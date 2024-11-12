@@ -4,7 +4,7 @@ import { Company } from "@/misc/companies";
 export const companyApi = createApi({
   reducerPath: "companyApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: import.meta.env.VITE_BASE_URL || "http://localhost:3003/api/v1",
+    baseUrl: import.meta.env.VITE_BASE_URL,
     prepareHeaders: (headers) => {
       const token = localStorage.getItem("token");
       if (token) {

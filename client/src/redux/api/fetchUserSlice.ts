@@ -1,30 +1,31 @@
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const fetchUserSlice = createApi({
-  reducerPath: 'fetchUserSlice',
+  reducerPath: "fetchUserSlice",
   baseQuery: fetchBaseQuery({
-    baseUrl: 'http://localhost:3003/api/v1',
+    baseUrl: import.meta.env.VITE_BASE_URL,
     prepareHeaders: (headers, { getState }) => {
-      console.log('PrepareHeaders is called');
+      console.log("PrepareHeaders is called");
       const token = (getState() as { auth: { token: string } }).auth.token;
 
-      console.log('Token in prepareHeaders:', token);
+      console.log("Token in prepareHeaders:", token);
       if (token) {
-        headers.set('Authorization', `Bearer ${token}`);
+        headers.set("Authorization", `Bearer ${token}`);
       } else {
-         console.warn('No token found in state');
+        console.warn("No token found in state");
       }
       return headers;
     },
   }),
   endpoints: (builder) => ({
     fetchCompanyUser: builder.query({
-      query: () => '/companies',
+      query: () => "/companies",
     }),
     fetchJobseekerUser: builder.query({
-      query: () => '/jobseekers',
+      query: () => "/jobseekers",
     }),
   }),
 });
 
-export const { useFetchCompanyUserQuery, useFetchJobseekerUserQuery } = fetchUserSlice;
+export const { useFetchCompanyUserQuery, useFetchJobseekerUserQuery } =
+  fetchUserSlice;

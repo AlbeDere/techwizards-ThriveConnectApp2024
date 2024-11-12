@@ -167,7 +167,7 @@ Content-Type: application/json
 GET http://localhost:3003/api/v1/companies/
 
 ### Get a company by ID:
-GET http://localhost:3003/api/v1/companies/:id
+GET http://localhost:3003/api/v1/companies/672fbdc77be9122c3047f1c4
 
 ### Update a company by ID:
 PATCH http://localhost:3003/api/v1/companies/:id

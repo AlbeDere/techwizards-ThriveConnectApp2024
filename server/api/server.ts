@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { httpServer } from "./app";
+import { httpServer } from ".";
 import { MongoClient } from "mongodb";
 import { JobMatchingAgent } from "./langchain/agents/matchingAgent/agents";
 import dotenv from "dotenv";
@@ -37,14 +37,19 @@ const startChangeStream = async (collectionName: string) => {
 
         try {
           // Trigger the matching agent whenever a new company or jobseeker is inserted
-          const analysis = await JobMatchingAgent.runMatchingAgent(client, collectionName);
-          console.log(`Matching analysis after new document in ${collectionName}:`, analysis);
+          const analysis = await JobMatchingAgent.runMatchingAgent(
+            client,
+            collectionName
+          );
+          console.log(
+            `Matching analysis after new document in ${collectionName}:`,
+            analysis
+          );
         } catch (error) {
           console.error("Error in matching process:", error);
         }
       }
     });
-
   } catch (error) {
     console.error(`Error starting change stream for ${collectionName}:`, error);
   }
@@ -55,9 +60,11 @@ client
   .connect()
   .then(() => {
     // Start watching changes in both the 'companies' and 'jobseekers' collections
-    startChangeStream("companies");  // Listen to 'companies' collection
+    startChangeStream("companies"); // Listen to 'companies' collection
     startChangeStream("jobseekers"); // Listen to 'jobseekers' collection
-    console.log("Change streams started to listen for new companies and jobseekers.");
+    console.log(
+      "Change streams started to listen for new companies and jobseekers."
+    );
   })
   .catch((error) => {
     console.error("Error starting change streams:", error);

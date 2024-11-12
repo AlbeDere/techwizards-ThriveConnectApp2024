@@ -1,30 +1,23 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { IFeedback, FeedbackResponse } from "../../misc/feedbacks";
-import { baseUrl } from "../axiosConfig";
+import { IFeedback } from '@/misc/feedbacks';
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
-export const feedbackApi = createApi({
-  reducerPath: "feedbackApi",
+export const feedbackSlice = createApi({
+  reducerPath: 'feedbackSlice',
   baseQuery: fetchBaseQuery({
-    baseUrl: baseUrl,
+    baseUrl: import.meta.env.VITE_BASE_URL,
+    prepareHeaders: (headers) => {
+      const token = localStorage.getItem('token');
+      if (token) {
+        headers.set('Authorization', `Bearer ${token}`);
+      }
+      return headers;
+    },
   }),
   endpoints: (builder) => ({
-    // Define mutation to create feedback
-    createFeedback: builder.mutation<FeedbackResponse, IFeedback>({
-      query: ({ companyId, feedbackText, sentimentScore }) => ({
-        url: `/feedback/${companyId}`,
-        method: "POST",
-        body: { feedbackText, sentimentScore },
-      }),
-    }),
-
-    // Query to get all feedback for a specific company
-    getAllFeedbacksForCompany: builder.query<FeedbackResponse[], string>({
-      query: (companyId) => ({
-        url: `/feedback/${companyId}`,
-        method: "GET",
-      }),
+    getAllFeedbacksForCompany: builder.query<IFeedback[], string>({
+      query: (companyId) => `/feedback/${companyId}`,
     }),
   }),
 });
 
-export const { useCreateFeedbackMutation } = feedbackApi;
+export const { useGetAllFeedbacksForCompanyQuery } = feedbackSlice;
