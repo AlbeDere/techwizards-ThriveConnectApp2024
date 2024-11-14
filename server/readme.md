@@ -1,4 +1,3 @@
-
 # ThriveConnectApp Documentation
 
 ## Table of Contents
@@ -11,6 +10,7 @@
 6. [Database Setup](#database-setup)
 7. [Starting the Application](#starting-the-application)
 8. [Error Handling](#error-handling)
+9. [Dockerize] (#dockerize)
 
 ---
 
@@ -80,46 +80,30 @@ src/
 
 ### Authentication Routes (`authRoutes.ts`)
 
-- **POST /api/v1/auth/login**  
+- **POST /api/v1/auth/login**
   Authenticates a user (either job seeker or company) and returns a JWT.
 
 ### Company Routes (`companyRoutes.ts`)
 
-- **POST /api/v1/companies**  
-  Create a new company profile.
-
-- **GET /api/v1/companies**  
-  Retrieve all companies.
-
-- **GET /api/v1/companies/:id**  
-  Get details of a specific company by ID.
-
-- **PUT /api/v1/companies/:id**  
-  Update a company's profile.
-
-- **DELETE /api/v1/companies/:id**  
+- **POST /api/v1/companies**Create a new company profile.
+- **GET /api/v1/companies**Retrieve all companies.
+- **GET /api/v1/companies/:id**Get details of a specific company by ID.
+- **PUT /api/v1/companies/:id**Update a company's profile.
+- **DELETE /api/v1/companies/:id**
   Delete a company by ID.
 
 ### Job Seeker Routes (`jobSeekerRoutes.ts`)
 
-- **POST /api/v1/jobseekers**  
-  Register a new job seeker profile.
-
-- **GET /api/v1/jobseekers**  
-  Retrieve all job seekers.
-
-- **GET /api/v1/jobseekers/:id**  
-  Get details of a specific job seeker by ID.
-
-- **PATCH /api/v1/jobseekers/:id**  
-  Update a job seeker’s profile.
-
-- **DELETE /api/v1/jobseekers/:id**  
+- **POST /api/v1/jobseekers**Register a new job seeker profile.
+- **GET /api/v1/jobseekers**Retrieve all job seekers.
+- **GET /api/v1/jobseekers/:id**Get details of a specific job seeker by ID.
+- **PATCH /api/v1/jobseekers/:id**Update a job seeker’s profile.
+- **DELETE /api/v1/jobseekers/:id**
   Delete a job seeker profile by ID.
 
 ### Feedback Routes (`feedbackRoutes.ts`)
 
-- **POST /api/v1/feedback/:companyId**  
+- **POST /api/v1/feedback/:companyId**
   Submit feedback for a specific company.
 
 ## Services
@@ -127,9 +111,11 @@ src/
 Each service handles the core logic for various parts of the application.
 
 ### `authServices.ts`
+
 - **authenticateUser(email, password, role)**: Verifies user credentials and returns a JWT if successful.
 
 ### `companyServices.ts`
+
 - **createCompany(companyData)**: Creates a new company profile, generates embeddings, and stores them.
 - **getCompanyById(id)**: Fetches a company by ID.
 - **updateCompanyProfile(id, updatedCompanyData)**: Updates an existing company profile with new details.
@@ -137,6 +123,7 @@ Each service handles the core logic for various parts of the application.
 - **fetchAllCompanies()**: Retrieves all companies.
 
 ### `jobSeekerServices.ts`
+
 - **createJobSeeker(jobSeekerData)**: Registers a new job seeker, generates embeddings, and stores them.
 - **getAllJobSeekers()**: Retrieves all job seekers.
 - **getJobSeekerById(id)**: Fetches a job seeker by ID.
@@ -144,11 +131,13 @@ Each service handles the core logic for various parts of the application.
 - **deleteJobSeekerById(id)**: Deletes a job seeker by ID.
 
 ### `feedbackServices.ts`
+
 - **addFeedback(companyId, feedbackData)**: Adds feedback to a specific company, updates company’s feedback list.
 
 ## Database Setup
 
 The application uses MongoDB, with Mongoose models defined for each main entity:
+
 - `CompanyModel`
 - `JobSeekerModel`
 - `FeedbackModel`
@@ -165,17 +154,44 @@ In `servers.ts`, MongoDB change streams are initialized to monitor the `companie
    ```
 2. Start the MongoDB server locally or use a remote MongoDB URL.
 3. Start the application:
+
    ```bash
    npm run start
    ```
+
    The server will run on the port specified in the `.env` file (default: `3003`).
 
 ## Error Handling
 
 - **Global Error Middleware**: The middleware in `errorMiddleware.ts` ensures all errors are caught and processed consistently, logging them and sending appropriate HTTP status codes.
-
 - **Custom Errors**: Custom error classes (`ApiError`, `BadRequestError`, `UnauthorizedError`, etc.) are used throughout the application for cleaner error handling.
 
---- 
+---
 
 This documentation provides a complete overview of the ThriveConnectApp setup and should be sufficient for getting started with development, debugging, or onboarding new contributors.
+
+## Dockerize
+
+1. To build a Docker image:
+
+```
+docker build -t thriveconnect-server .
+```
+
+2. After building a Docker image, you can use the following command to run the Docker container
+
+```
+docker run -p 3003:3003 --name thriveconnect-container thriveconnect-server
+```
+
+3. Tag docker image:
+
+```
+docker tag thriveconnect-server:latest tripplen63/thriveconnect-server:latest
+```
+
+4. Push the docker image to docker hub:
+
+```
+docker push tripplen63/thriveconnect-server:latest
+```

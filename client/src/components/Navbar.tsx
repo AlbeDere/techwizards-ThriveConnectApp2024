@@ -17,6 +17,7 @@ import { jwtDecode } from "jwt-decode";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [scrollY, setScrollY] = useState(0);
   const navigate = useNavigate();
   const user = localStorage.getItem("token");
@@ -27,7 +28,11 @@ export default function Navbar() {
     const token = localStorage.getItem("token");
     if (token) {
       try {
-        const decodedToken: any = jwtDecode(token);
+        interface DecodedToken {
+          role: string;
+          id: string;
+        }
+        const decodedToken: DecodedToken = jwtDecode<DecodedToken>(token);
         setUserRole(decodedToken.role);
         setUserId(decodedToken.id);
       } catch (error) {

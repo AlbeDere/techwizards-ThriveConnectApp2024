@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  backend:
+    build: .
+    ports:
+      - "3003:3003"
+    environment:
+      - PORT=3003
+      - MONGO_DB_URL=mongodb+srv://techwizards:techwizards123@thriveconnectapp.bz3oe.mongodb.net/?retryWrites=true&w=majority&appName=ThriveConnectApp
+      - GOOGLE_API_KEY=AIzaSyDNyEWlJm4SKI571n8mJlnMr_9s8VFpcY4
+      - JWT_SECRET=qwertyuiopasdfghjklzxcvbnm123456
+      - GROQ_API_KEY=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
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+
+volumes:
+  mongo_data:

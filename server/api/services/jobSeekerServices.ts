@@ -1,4 +1,4 @@
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { JobSeekerModel } from "../models/jobSeekerModel";
 import { IJobSeeker } from "../interfaces/IJobSeeker";
 import {

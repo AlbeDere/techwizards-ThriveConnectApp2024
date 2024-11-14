@@ -9,16 +9,16 @@ import { IJobSeeker } from "../interfaces/IJobSeeker";
 import { CompanyModel } from "../models/companyModel";
 import { JobSeekerModel } from "../models/jobSeekerModel";
 import jwt from "jsonwebtoken";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 
 export const authenticateUser = async (
   email: string,
-  password: string,
+  password: string
 ): Promise<string | null> => {
   try {
     const [jobSeeker, company] = await Promise.all([
       JobSeekerModel.findOne({ email }),
-      CompanyModel.findOne({ email })
+      CompanyModel.findOne({ email }),
     ]);
     const user = jobSeeker || company;
 

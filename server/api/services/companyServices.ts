@@ -1,4 +1,4 @@
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { ICompany } from "../interfaces/ICompany";
 import {
   ApiError,
